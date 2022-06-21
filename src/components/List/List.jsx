@@ -9,7 +9,7 @@ const List = () => {
   const [rating, setRating] = useState('restaurants');
 
   const places = [
-    {name: 'First Place'},
+    {name: 'Belter of a Restaurant'},
     {name: 'Best Beer'},
     {name: 'Best Steak'},
     {name: 'Best Italian'},
