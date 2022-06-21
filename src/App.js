@@ -9,25 +9,32 @@ import PlaceDetails from "./components/PlaceDetails/PlaceDetails";
 
 const App = () => {
   const [places, setPlaces] = useState([]);
+  const [coordinates, setCoordinates] = useState({});
+  const [bounds, setBounds] = useState(null);
+
 
   useEffect(() => {
     getPlaceData()
-    .then((data) => {
-      console.log(data);
-      setPlaces(data);
-    })
+      .then((data) => {
+        console.log(data);
+        setPlaces(data);
+      })
   }, [])
 
   return (
     <div>
       <CssBaseline />
       <Header />
-      <Grid container spacing={3} style={{ width: '100%'}}>
+      <Grid container spacing={3} style={{ width: '100%' }}>
         <Grid item xs={12} md={4}>
           <List />
         </Grid>
         <Grid item xs={12} md={8}>
-          <Map />
+          <Map 
+          setCoordinates={setCoordinates}
+          setBounds={setBounds}
+          coordinates={coordinates}
+          />
         </Grid>
       </Grid>
     </div>
