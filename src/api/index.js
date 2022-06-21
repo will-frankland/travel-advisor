@@ -20,6 +20,7 @@ export const getPlaceData = async () => {
   try {
     // request
     const { data: { data } } = await axios.get(url, options);
+    
     return data
   } catch (error) {
     console.log(error)
