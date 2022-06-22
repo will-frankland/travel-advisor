@@ -9,8 +9,9 @@ import PlaceDetails from "./components/PlaceDetails/PlaceDetails";
 
 const App = () => {
   const [places, setPlaces] = useState([]);
-  const [coordinates, setCoordinates] = useState({ lat: 0, lng: 0 });
-  const [bounds, setBounds] = useState();
+  const [childClicked, setChildClicked] = useState(null)
+  const [coordinates, setCoordinates] = useState({});
+  const [bounds, setBounds] = useState({});
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(({ coordinates: {  latitude, longitude } }) => {
@@ -19,7 +20,7 @@ const App = () => {
   },[])
 
 
-  useEffect((bounds) => {
+  useEffect(() => {
     console.log("coords&bnds->", coordinates, bounds)
     getPlaceData(bounds.sw, bounds.ne)
       .then((data) => {
@@ -36,6 +37,7 @@ const App = () => {
         <Grid item xs={12} md={4}>
           <List 
             places={places}
+            childClicked={childClicked}
             />
         </Grid>
         <Grid item xs={12} md={8}>
@@ -44,6 +46,7 @@ const App = () => {
           setBounds={setBounds}
           coordinates={coordinates}
           places={places}
+
           />
         </Grid>
       </Grid>
