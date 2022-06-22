@@ -19,7 +19,7 @@ const App = () => {
   },[])
 
 
-  useEffect(() => {
+  useEffect((bounds) => {
     console.log(coordinates, bounds)
     getPlaceData(bounds.sw, bounds.ne)
       .then((data) => {
