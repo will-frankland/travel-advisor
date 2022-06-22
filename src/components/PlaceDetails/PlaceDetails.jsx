@@ -32,6 +32,14 @@ const PlaceDetails = ({ place }) => {
             <Typography variant="subtitle2" color="textSecondary">{award.display_name}</Typography>
           </Box>
         ))}
+        {place?.cuisine?.map(({ name }) => (
+          <Chip key-={name} size="small" label={name} className={Chip}/>
+        ))}
+        {place?.address && (
+          <Typography gutterBottom variant="body2" color="textSecondary" className="classes.subtitle">
+            <LocationOnIcon /> {place.address}
+          </Typography>
+        )}
 
       </CardContent>
     </ Card>
