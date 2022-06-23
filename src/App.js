@@ -21,10 +21,10 @@ const App = () => {
 
   // This use effect only happens at the start - dependency array is empty
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(({ coordinates: {  latitude, longitude } }) => {
+    navigator.geolocation.getCurrentPosition(({ coordinates: { latitude, longitude } }) => {
       setCoordinates({ lat: latitude, lng: longitude })
     })
-  },[])
+  }, [])
 
   // This UE only happens only when the rating changes
   useEffect(() => {
@@ -34,14 +34,16 @@ const App = () => {
 
   // This UE happens when any of the params in the DepArr change
   useEffect(() => {
-    setIsLoading(true)
+    if (bounds) {
+      setIsLoading(true)
 
-    getPlaceData(type, bounds.sw, bounds.ne)
-      .then((data) => {
-        setPlaces(data);
-        setFilteredPlaces([]);
-        setIsLoading(false);
-      })
+      getPlaceData(type, bounds.sw, bounds.ne)
+        .then((data) => {
+          setPlaces(data?.filter((place) => place.name && place.num_reviews > 0));
+          setFilteredPlaces([]);
+          setIsLoading(false);
+        })
+    }
   }, [type, coordinates, bounds]);
 
   return (
@@ -50,7 +52,7 @@ const App = () => {
       <Header setCoordinates={setCoordinates} />
       <Grid container spacing={3} style={{ width: '100%' }}>
         <Grid item xs={12} md={4}>
-          <List 
+          <List
             places={filteredPlaces.length ? filteredPlaces : places}
             childClicked={childClicked}
             isLoading={isLoading}
@@ -58,14 +60,14 @@ const App = () => {
             setType={setType}
             rating={rating}
             setRating={setRating}
-            />
+          />
         </Grid>
         <Grid item xs={12} md={8}>
-          <Map 
-          setCoordinates={setCoordinates}
-          setBounds={setBounds}
-          coordinates={coordinates}
-          places={filteredPlaces.length ? filteredPlaces : places}
+          <Map
+            setCoordinates={setCoordinates}
+            setBounds={setBounds}
+            coordinates={coordinates}
+            places={filteredPlaces.length ? filteredPlaces : places}
 
           />
         </Grid>
