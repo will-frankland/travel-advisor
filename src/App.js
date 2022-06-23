@@ -9,7 +9,8 @@ import PlaceDetails from "./components/PlaceDetails/PlaceDetails";
 
 const App = () => {
   const [places, setPlaces] = useState([]);
-  const [childClicked, setChildClicked] = useState(null)
+  const [filteredPlaces, setFilteredPlaces] = useState([]);
+  const [childClicked, setChildClicked] = useState(null);
   const [coordinates, setCoordinates] = useState({});
   const [bounds, setBounds] = useState({});
 
@@ -17,21 +18,30 @@ const App = () => {
   const [type, setType] = useState('restaurants');
   const [rating, setRating] = useState('');
 
+
+  // This use effect only happens at the start - dependency array is empty
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(({ coordinates: {  latitude, longitude } }) => {
       setCoordinates({ lat: latitude, lng: longitude })
     })
   },[])
 
+  // This UE only happens only when the rating changes
+  useEffect(() => {
+    const filteredPlaced = places.filter((place) => places.rating > rating)
+    setFilteredPlaces();
+  }, [rating]);
+
+  // This UE happens when any of the params in the DepArr change
   useEffect(() => {
     setIsLoading(true)
-    getPlaceData(bounds.sw, bounds.ne)
+
+    getPlaceData(type, bounds.sw, bounds.ne)
       .then((data) => {
-        console.log(data);
         setPlaces(data);
         setIsLoading(false);
       })
-  }, [coordinates, bounds])
+  }, [type, coordinates, bounds]);
 
   return (
     <div>

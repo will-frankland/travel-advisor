@@ -1,5 +1,5 @@
 import React from "react";
-import GoogleMapReact from "google-map-react";
+import GoogleMapReact from 'google-map-react';
 import { Paper, Typography, useMediaQuery } from '@material-ui/core';
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import Rating from '@material-ui/lab/Rating';
@@ -7,7 +7,7 @@ import Rating from '@material-ui/lab/Rating';
 import useStyles from './styles';
 
 
-const Map = ( {setCoordinates, setBounds, coordinates, places }) => {
+const Map = ( { coordinates, setBounds, setCoordinates, places }) => {
   const classes = useStyles();
   const isDesktop = useMediaQuery('(min-width:600px)');
   
