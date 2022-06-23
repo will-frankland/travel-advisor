@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { CssBaseline, Grid } from "@material-ui/core";
 
-import { getPlaceData } from "./api";
+import { getPlaceData, getWeatherData } from "./api";
 import Header from "./components/Header/Header";
 import List from "./components/List/List";
 import Map from "./components/Map/Map";
@@ -9,6 +9,7 @@ import PlaceDetails from "./components/PlaceDetails/PlaceDetails";
 
 const App = () => {
   const [places, setPlaces] = useState([]);
+  const [weatherData, setWeatherData] = useState([]);
   const [filteredPlaces, setFilteredPlaces] = useState([]);
   const [childClicked, setChildClicked] = useState(null);
   const [coordinates, setCoordinates] = useState({});
@@ -28,14 +29,17 @@ const App = () => {
 
   // This UE only happens only when the rating changes
   useEffect(() => {
-    const filteredPlaced = places.filter((place) => places.rating > rating)
+    const filteredPlaces = places.filter((place) => places.rating > rating)
     setFilteredPlaces(filteredPlaces);
   }, [rating]);
 
   // This UE happens when any of the params in the DepArr change
   useEffect(() => {
-    if (bounds) {
+    if (bounds.sw && bounds.ne) {
       setIsLoading(true)
+
+      getWeatherData(coordinates.lat, coordinates.lng)
+        .then((data) => setWeatherData(data))
 
       getPlaceData(type, bounds.sw, bounds.ne)
         .then((data) => {
@@ -44,7 +48,10 @@ const App = () => {
           setIsLoading(false);
         })
     }
-  }, [type, coordinates, bounds]);
+  }, [type, bounds]);
+
+  console.log(places)
+  console.log(filteredPlaces)
 
   return (
     <div>
