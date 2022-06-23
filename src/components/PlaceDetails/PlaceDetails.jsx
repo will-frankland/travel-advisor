@@ -5,8 +5,10 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import Rating from '@material-ui/lab/Rating';
 import useStyles from './styles';
 
-const PlaceDetails = ({ place }) => {
+const PlaceDetails = ({ place, selected, refProp }) => {
   const classes = useStyles();
+
+  if (selected) refProp?.current?.scrollIntoView({ behaviour: "smooth", block: start})
 
   console.log('place->', place)
   return (

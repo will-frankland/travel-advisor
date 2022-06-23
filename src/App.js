@@ -13,19 +13,21 @@ const App = () => {
   const [coordinates, setCoordinates] = useState({});
   const [bounds, setBounds] = useState({});
 
+  const [isLoading, setIsLoading] = useState(false)
+
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(({ coordinates: {  latitude, longitude } }) => {
       setCoordinates({ lat: latitude, lng: longitude })
     })
   },[])
 
-
   useEffect(() => {
-    console.log("coords&bnds->", coordinates, bounds)
+    setIsLoading(true)
     getPlaceData(bounds.sw, bounds.ne)
       .then((data) => {
         console.log(data);
         setPlaces(data);
+        setIsLoading(false);
       })
   }, [coordinates, bounds])
 
