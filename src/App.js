@@ -75,6 +75,8 @@ const App = () => {
             setBounds={setBounds}
             coordinates={coordinates}
             places={filteredPlaces.length ? filteredPlaces : places}
+            setChildClicked={setChildClicked}
+            weatherData={weatherData}
 
           />
         </Grid>
