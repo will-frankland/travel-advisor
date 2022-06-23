@@ -14,7 +14,7 @@ const List = ({ places, type, setType, rating, setRating, childClicked, isLoadin
 
   return (
     <div className={classes.container}>
-      <Typography variant="h4">Food & Dining around you</Typography>
+      <Typography variant="h4">Dining Around You</Typography>
       {isLoading ? (
         <div className={classes.loading}>
           <CircularProgress size="5rem" />
@@ -30,7 +30,7 @@ const List = ({ places, type, setType, rating, setRating, childClicked, isLoadin
             </Select>
           </FormControl>
           <FormControl className={classes.formControl}>
-            <InputLabel id="rating">Rating</InputLabel>
+            <InputLabel id="rating">Select Rating</InputLabel>
             <Select id="rating" value={rating} onChange={(e) => setRating(e.target.value)}>
               <MenuItem value="">All</MenuItem>
               <MenuItem value="3">Above 3.0</MenuItem>
